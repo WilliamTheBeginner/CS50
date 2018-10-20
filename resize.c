@@ -122,9 +122,6 @@ int main(int argc, char *argv[])
                     fputc(0x00, outptr);
                 }
 
-                // send file cursor back to beginning of the row
-                fseek(inptr, -bi.biWidth * 3 + padding, SEEK_CUR);
-
             }
 
             // add padding
@@ -133,6 +130,9 @@ int main(int argc, char *argv[])
             {
                 fputc(0x00, outptr);
             }
+
+            // send file cursor back to beginning of the row
+            fseek(inptr, -bi.biWidth * 3 + padding, SEEK_CUR);
 
         }
 
