@@ -93,8 +93,6 @@ int main(int argc, char *argv[])
     // write outfile's BITMAPINFOHEADER
     fwrite(&n_bi, sizeof(BITMAPINFOHEADER), 1, outptr);
 
-
-
     // iterate over infile's scanlines
     for (int i = 0, biHeight = abs(bi.biHeight); i < biHeight; i++)
     {
@@ -114,7 +112,18 @@ int main(int argc, char *argv[])
                 for (int m = 0; m < *n; m++)
                 {
                     fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
+
                 }
+
+                // add padding
+
+                for (int l = 0; l < n_padding; l++)
+                {
+                    fputc(0x00, outptr);
+                }
+
+                // send file cursor back to beginning of the row
+                fseek(inptr, -bi.biWidth * 3 + padding, SEEK_CUR);
 
             }
 
@@ -130,14 +139,6 @@ int main(int argc, char *argv[])
         // skip over padding
         fseek(inptr, padding, SEEK_CUR);
 
-        // send file cursor back to beginning of the row
-        fseek(inptr, -bi.biWidth * 3 + padding, SEEK_CUR);
-
-
-
-        // skip over padding
-
-        fseek(inptr, padding, SEEK_CUR);
     }
 
     // close infile
