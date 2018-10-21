@@ -122,17 +122,22 @@ int main(int argc, char *argv[])
                     fputc(0x00, outptr);
                 }
 
+                int seek_n = bi.biWidth * sizeof(RGBTRIPLE);
+
+                fseek(inptr, seek_n + padding, SEEK_CUR);
+
             }
 
             // add padding
 
-            for (int l = 0; l < n_padding; l++)
-            {
-                fputc(0x00, outptr);
-            }
+            //for (int l = 0; l < n_padding; l++)
+            //{
+             //   fputc(0x00, outptr);
+            //}
 
             // send file cursor back to beginning of the row
-            fseek(inptr, -bi.biWidth * 3 + padding, SEEK_CUR);
+            //fseek(inptr, -bi.biWidth * 3 + padding, SEEK_CUR);
+            //fseek(inptr, bi.biWidth * sizeof(RGBTRIPLE) + padding, SEEK_CUR);
 
         }
 
