@@ -112,34 +112,23 @@ int main(int argc, char *argv[])
                 for (int m = 0; m < *n; m++)
                 {
                     fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
-
                 }
-
-                // add padding
-
-                for (int l = 0; l < n_padding; l++)
-                {
-                    fputc(0x00, outptr);
-                }
-
-                int seek_n = bi.biWidth * sizeof(RGBTRIPLE);
-
-                fseek(inptr, seek_n + padding, SEEK_CUR);
-
             }
 
             // add padding
 
-            //for (int l = 0; l < n_padding; l++)
-            //{
-             //   fputc(0x00, outptr);
-            //}
+            for (int l = 0; l < n_padding; l++)
+            {
+                fputc(0x00, outptr);
+            }
+
+            fseek(inptr, -bi.biWidth * 3 + padding, SEEK_CUR);
 
             // send file cursor back to beginning of the row
-            //fseek(inptr, -bi.biWidth * 3 + padding, SEEK_CUR);
-            //fseek(inptr, bi.biWidth * sizeof(RGBTRIPLE) + padding, SEEK_CUR);
 
         }
+
+
 
         // skip over padding
         fseek(inptr, padding, SEEK_CUR);
