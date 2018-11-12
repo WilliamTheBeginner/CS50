@@ -31,7 +31,7 @@ node;
 
 node *hashtable[MAX];
 
-bool insert(char * str)
+bool insert(const char * str)
 {
     ;
     // Compute index
@@ -59,7 +59,7 @@ bool insert(char * str)
 
 bool search(const char * str)
 {
-        char * c_temp = malloc(LENGTH + 1);
+        char * c_temp = malloc(sizeof(char) * strlen(str));
 
         for(int i = 0, k = strlen(str); i < k; i++)
         {
