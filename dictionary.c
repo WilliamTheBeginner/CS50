@@ -6,7 +6,7 @@
 #include <strings.h>
 #include <ctype.h>
 #include "dictionary.h"
-#define MAX 300000
+#define MAX 3000000
 
 unsigned long hashstring(const char *str)
 {
@@ -42,11 +42,11 @@ bool insert(const char * str)
 
     // if hashpointer isn't pointing to anything make head
 
-    if(new_node == NULL)
-    {
-        unload();
-        return false;
-    }
+    //if(new_node == NULL)
+    //{
+    //    unload();
+     //   return false;
+    //}
 
     strcpy(new_node->word, str);
 
@@ -59,7 +59,7 @@ bool insert(const char * str)
 
 bool search(const char * str)
 {
-        char * c_temp = malloc(sizeof(char) * strlen(str));
+        char * c_temp = malloc(sizeof(char) * (strlen(str) + 1));
 
         for(int i = 0, k = strlen(str); i < k; i++)
         {
@@ -118,18 +118,18 @@ bool load(const char *dictionary)
         return false;
     }
 
-    //char * word = malloc(sizeof(LENGTH + 1));
-
-    char * word = malloc(sizeof(char) * LENGTH + 1);
+    char * word = malloc(sizeof(char) * (LENGTH + 1));
 
     // scan dictionary word by word
 
     while(fscanf(inptr, "%s", word) != EOF)
     {
+
         bool result = insert(word);
 
         if (result == false)
         {
+            free(word);
             unload();
             return false;
         }
@@ -154,6 +154,11 @@ unsigned int size(void)
         if (hashtable[i] != NULL)
         {
             number++;
+        }
+
+        if (number == 111068)
+        {
+            ;
         }
     }
 
